@@ -23,6 +23,7 @@
         <th>Color</th>
         <th>IsPublish</th>
         <th>Expire Time</th>
+        <th>Description</th>
         <th>Operations</th>
     </thead>
     <tbody>
@@ -36,6 +37,7 @@
                 <td>@p.Color</td>
                 <td>@(p.IsPublish ? "YES" : "NO") </td>
                 <td>@(p.Expire == 0 ? "---" : p.Expire)</td>
+                <td>@(p.Description.Length > 20 ? @p.Description.Substring(0, 10) : p.Description)</td>
                 <td>
                     <p>
                         <a asp-controller="products" asp-action="Remove" asp-route-id="@p.Id">Delete</a>
