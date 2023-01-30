@@ -1,5 +1,7 @@
 ﻿using AspNetCoreMvc004.Helpers;
 using AspNetCoreMvc004.Models;
+using AspNetCoreMvc004.ViewModels;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -11,10 +13,13 @@ namespace AspNetCoreMvc004.Controllers
 
         private readonly ProductRepository _productRepository;
 
-        public ProductsController(AppDbContext context)
+        private readonly IMapper _mapper;
+
+        public ProductsController(AppDbContext context, IMapper mapper)
         {
             _productRepository = new ProductRepository();
             _context = context;
+            _mapper = mapper;
 
             /* 
             if (!_context.Products.Any())
@@ -32,7 +37,7 @@ namespace AspNetCoreMvc004.Controllers
         {
             var products = _context.Products.ToList();
             
-            return View(products);
+            return View(_mapper.Map<List<ProductViewModel>>(products));
         }
 
         public IActionResult Remove(int id)
@@ -88,7 +93,7 @@ namespace AspNetCoreMvc004.Controllers
         {
             var product = _context.Products.Find(id);
 
-            ViewBag.ExpireValue =product.Expire;
+            // ViewBag.ExpireValue = product.Expire;
 
             ViewBag.Expire = new Dictionary<string, int>() { { "1 Month", 1 },
                                                              { "3 Month" , 3},
