@@ -7,7 +7,7 @@
 <h1>Update a Product</h1>
 <hr />
 
-<form asp-action="Update" method="POST">
+<form asp-action="Update" asp-route-productId="@Model.Id" method="POST">
     <div class="mb-3">
         <label asp-for="Name" class="form-label">Name: </label>
         <input type="text" class="form-control" asp-for="Name">

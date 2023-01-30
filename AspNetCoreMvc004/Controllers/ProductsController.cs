@@ -70,7 +70,7 @@ namespace AspNetCoreMvc004.Controllers
         }
 
 
-        [HttpPost] public IActionResult Add(Product newProduct)
+        [HttpPost] public IActionResult Add(ProductViewModel newProduct)
         {
             /*
             var name = HttpContext.Request.Form["Name"].ToString();
@@ -81,12 +81,30 @@ namespace AspNetCoreMvc004.Controllers
 
             // Product newProduct = new() { Name = Name, Price = Price, Stock = Stock, Color = Color};
 
-            _context.Products.Add(newProduct);
-            _context.SaveChanges();
+            if (ModelState.IsValid)
+            {
+                _context.Products.Add(_mapper.Map<Product>(newProduct));
+                _context.SaveChanges();
 
-            TempData["status"] = "Product added successfully...";
+                TempData["status"] = "Product added successfully...";
 
-            return RedirectToAction("Index");
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                ViewBag.Expire = new Dictionary<string, int>() { { "1 Month", 1 },
+                                                             { "3 Month" , 3},
+                                                             { "6 Month", 6 },
+                                                             { "12 Month", 12 } };
+
+                ViewBag.colorSelect = new SelectList(new List<ColorSelectList> { new() { Data = "Blue", Value = "Blue" },
+                                                                                 new() { Data = "Red", Value = "Red" },
+                                                                                 new() { Data = "Green", Value = "Green" },
+                                                                                }, "Value", "Data");
+
+                return View();
+            }
+            
         }
 
         public IActionResult Update(int id)
