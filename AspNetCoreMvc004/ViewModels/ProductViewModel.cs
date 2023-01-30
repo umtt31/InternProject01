@@ -14,13 +14,14 @@ namespace AspNetCoreMvc004.ViewModels
 
         [Required(ErrorMessage = "This space can not be empty!")]
         public int? Stock { get; set; }
-        
+
+        [Required(ErrorMessage = "This space can not be empty!")]
         public string? Color { get; set; }
 
         public bool IsPublish { get; set; }
 
         [Required(ErrorMessage = "This space can not be empty!")]
-        public int Expire { get; set; }
+        public int? Expire { get; set; }
 
         [Required(ErrorMessage = "This space can not be empty!")]
         public string? Description { get; set; }

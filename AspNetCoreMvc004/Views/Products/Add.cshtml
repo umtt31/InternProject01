@@ -34,6 +34,7 @@
         <select class="form-select" asp-for="Color" asp-items="@ViewBag.colorSelect">
             <option value="">Select a color</option>
         </select>
+        <span class="text-danger" asp-validation-for="Color"></span>
     </div>
 
     <div class="form-check mb-4">
