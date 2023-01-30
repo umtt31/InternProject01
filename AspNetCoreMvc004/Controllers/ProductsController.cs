@@ -7,15 +7,13 @@ namespace AspNetCoreMvc004.Controllers
     public class ProductsController : Controller
     {
         private AppDbContext _context;
-        private IHelper _helper;
 
         private readonly ProductRepository _productRepository;
 
-        public ProductsController(AppDbContext context, IHelper helper)
+        public ProductsController(AppDbContext context)
         {
             _productRepository = new ProductRepository();
             _context = context;
-            _helper = helper;
 
             /* 
             if (!_context.Products.Any())
@@ -32,7 +30,7 @@ namespace AspNetCoreMvc004.Controllers
         public IActionResult Index(/* [FromServices]IHelper helper2, int id */)
         {
             var products = _context.Products.ToList();
-
+            
             return View(products);
         }
 
@@ -50,6 +48,7 @@ namespace AspNetCoreMvc004.Controllers
 
         public IActionResult Add()
         {
+            ViewBag.Expire = new List<string>() {"1 Month", "3 Month", "6 Month", "12 Month"};
 
             return View();
         }
