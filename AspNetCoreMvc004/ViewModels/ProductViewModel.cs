@@ -10,9 +10,11 @@ namespace AspNetCoreMvc004.ViewModels
         public string? Name { get; set; }
 
         [Required(ErrorMessage = "This space can not be empty!")]
+        [Range(200000, 20000000, ErrorMessage = "Price can not be smaller than 200.000 and can not be greater then 20.000.000")]
         public decimal? Price { get; set; }
 
         [Required(ErrorMessage = "This space can not be empty!")]
+        [Range(1, 120, ErrorMessage = "Stock can not be greater than 120!")]
         public int? Stock { get; set; }
 
         [Required(ErrorMessage = "This space can not be empty!")]
