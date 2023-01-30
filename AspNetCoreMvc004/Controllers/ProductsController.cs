@@ -48,7 +48,10 @@ namespace AspNetCoreMvc004.Controllers
 
         public IActionResult Add()
         {
-            ViewBag.Expire = new List<string>() {"1 Month", "3 Month", "6 Month", "12 Month"};
+            ViewBag.Expire = new Dictionary<string, int>() { { "1 Month", 1 }, 
+                                                             { "3 Month" , 3}, 
+                                                             { "6 Month", 6 }, 
+                                                             { "12 Month", 12 } };
 
             return View();
         }

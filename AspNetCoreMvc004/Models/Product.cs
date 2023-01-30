@@ -14,6 +14,6 @@
 
         public bool IsPublish { get; set; }
 
-        public string? Expire { get; set; }
+        public int Expire { get; set; }
     }
 }

@@ -27,22 +27,26 @@
         <input type="text" class="form-control" id="Color" asp-for="Color">
     </div>
 
-    <div class="form-check mb-1">
+    <div class="form-check mb-4">
         <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" asp-for="IsPublish">
         <label class="form-check-label" for="flexCheckDefault">
             Do you want it to be published? 
         </label>
     </div>
 
-    @foreach (var item in ViewBag.Expire as List<string>)
+    <div class="mb-3">    
+        <span>How much time Product will be listed?</span>
+        @foreach (var item in ViewBag.Expire as Dictionary<string, int>)
     {
         <div class="form-check">
-            <input class="form-check-input" type="radio" asp-for="Expire" value="@item">
+            <input class="form-check-input" type="radio" asp-for="Expire" value="@item.Value">
             <label class="form-check-label" for="flexRadioDefault1">
-                @item
+                @item.Key
             </label>
         </div>
     }
+    </div>
+
 
     <button class="btn btn-primary" type="submit">Save Product</button>
 </form>
