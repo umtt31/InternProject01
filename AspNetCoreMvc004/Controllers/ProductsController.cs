@@ -88,13 +88,27 @@ namespace AspNetCoreMvc004.Controllers
         {
             var product = _context.Products.Find(id);
 
+            ViewBag.ExpireValue =product.Expire;
+
+            ViewBag.Expire = new Dictionary<string, int>() { { "1 Month", 1 },
+                                                             { "3 Month" , 3},
+                                                             { "6 Month", 6 },
+                                                             { "12 Month", 12 } };
+
+            ViewBag.colorSelect = new SelectList(new List<ColorSelectList>
+            {
+                new() { Data = "Blue", Value = "Blue" },
+                new() { Data = "Red", Value = "Red" },
+                new() { Data = "Green", Value = "Green" },
+            }, "Value", "Data", product.Color);
+
             return View(product);
         }
 
-        [HttpPost] public IActionResult Update(Product updatedproduct, int productId)
+        [HttpPost] public IActionResult Update(Product updatedProduct, int productId)
         {
-            updatedproduct.Id = productId;
-            _context.Products.Update(updatedproduct);
+            updatedProduct.Id = productId;
+            _context.Products.Update(updatedProduct);
             _context.SaveChanges();
 
             TempData["status"] = "Product updated successfully...";
