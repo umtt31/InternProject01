@@ -20,6 +20,9 @@
         <th>Name</th>
         <th>Price</th>
         <th>Stock</th>
+        <th>Color</th>
+        <th>IsPublish</th>
+        <th>Expire Time</th>
         <th>Operations</th>
     </thead>
     <tbody>
@@ -30,6 +33,9 @@
                 <td>@p.Name</td>
                 <td>@p.Price</td>
                 <td>@p.Stock</td>
+                <td>@p.Color</td>
+                <td>@(p.IsPublish ? "YES" : "NO") </td>
+                <td>@(p.Expire == 0 ? "---" : p.Expire)</td>
                 <td>
                     <p>
                         <a asp-controller="products" asp-action="Remove" asp-route-id="@p.Id">Delete</a>
