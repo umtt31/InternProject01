@@ -1,6 +1,7 @@
 ﻿using AspNetCoreMvc004.Helpers;
 using AspNetCoreMvc004.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace AspNetCoreMvc004.Controllers
 {
@@ -52,6 +53,13 @@ namespace AspNetCoreMvc004.Controllers
                                                              { "3 Month" , 3}, 
                                                              { "6 Month", 6 }, 
                                                              { "12 Month", 12 } };
+
+            ViewBag.colorSelect = new SelectList(new List<ColorSelectList>
+            {
+                new() { Data = "Blue", Value = "Blue" },
+                new() { Data = "Red", Value = "Red" },
+                new() { Data = "Green", Value = "Green" },
+            }, "Value", "Data");
 
             return View();
         }

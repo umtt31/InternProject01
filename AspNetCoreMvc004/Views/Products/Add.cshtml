@@ -23,8 +23,14 @@
     </div>
 
     <div class="mb-5">
+        @*
         <label for="Color" class="form-label">Color: </label>
         <input type="text" class="form-control" id="Color" asp-for="Color">
+        *@
+
+        <select class="form-select" asp-for="Color" asp-items="@ViewBag.colorSelect">
+            <option value="">Select a color</option>
+        </select>
     </div>
 
     <div class="form-check mb-4">
