@@ -125,13 +125,32 @@ namespace AspNetCoreMvc004.Controllers
                 new() { Data = "Green", Value = "Green" },
             }, "Value", "Data", product.Color);
 
-            return View(product);
+            return View(_mapper.Map<ProductViewModel>(product));
         }
 
-        [HttpPost] public IActionResult Update(Product updatedProduct, int productId)
+        [HttpPost] public IActionResult Update(ProductViewModel updatedProduct, int productId)
         {
             updatedProduct.Id = productId;
-            _context.Products.Update(updatedProduct);
+
+            if (!ModelState.IsValid)
+            {
+                var product = _context.Products.Find(productId);
+
+                ViewBag.Expire = new Dictionary<string, int>() { { "1 Month", 1 },
+                                                                 { "3 Month" , 3},
+                                                                 { "6 Month", 6 },
+                                                                 { "12 Month", 12 } };
+
+                ViewBag.colorSelect = new SelectList(new List<ColorSelectList> {
+                                                     new() { Data = "Blue", Value = "Blue" },
+                                                     new() { Data = "Red", Value = "Red" },
+                                                     new() { Data = "Green", Value = "Green" }, }, "Value", "Data", product.Color);
+            }
+            else
+            {
+
+            }
+            _context.Products.Update(_mapper.Map<Product>(updatedProduct));
             _context.SaveChanges();
 
             TempData["status"] = "Product updated successfully...";
@@ -139,8 +158,8 @@ namespace AspNetCoreMvc004.Controllers
             return RedirectToAction("Index");
         }
 
-        [AcceptVerbs("GET", "POST")]
-        public IActionResult HasProductName(string Name)
+        /*
+        [AcceptVerbs("GET", "POST")] public IActionResult HasProductName(string Name)
         {
             var anyProduct = _context.Products.Any(x => x.Name.ToLower() == Name.ToLower());
 
@@ -154,6 +173,7 @@ namespace AspNetCoreMvc004.Controllers
                 return Json(true);
             }
         }
+        */
 
 
     }

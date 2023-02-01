@@ -9,7 +9,7 @@ namespace AspNetCoreMvc004.ViewModels
 
         [Required(ErrorMessage = "This space can not be empty!")]
         [StringLength(50, ErrorMessage = "Name attribute can not be greater than 50 chars")]
-        [Remote(action: "HasProductName", controller: "Products")]
+        // [Remote(action: "HasProductName", controller: "Products")]
         public string? Name { get; set; }
 
         [Required(ErrorMessage = "This space can not be empty!")]

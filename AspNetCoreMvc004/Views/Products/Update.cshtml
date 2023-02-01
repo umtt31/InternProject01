@@ -2,7 +2,7 @@
     ViewData["Title"] = "Update";
 }
 
-@model Product
+@model ProductViewModel
 
 <h1>Update a Product</h1>
 <hr />
@@ -11,16 +11,19 @@
     <div class="mb-3">
         <label asp-for="Name" class="form-label">Name: </label>
         <input type="text" class="form-control" asp-for="Name">
+        <span class="text-danger" asp-validation-for="Name"></span>
     </div>
 
     <div class="mb-3">
         <label asp-for="Price" class="form-label">Price: </label>
         <input class="form-control" asp-for="Price">
+        <span class="text-danger" asp-validation-for="Price"></span>
     </div>
 
     <div class="mb-3">
         <label asp-for="Stock" class="form-label">Stock: </label>
         <input type="number" class="form-control" asp-for="Stock">
+        <span class="text-danger" asp-validation-for="Stock"></span>
     </div>
 
     <div class="mb-5">
@@ -32,6 +35,7 @@
         <select class="form-select" asp-for="Color" asp-items="@ViewBag.colorSelect">
             <option value="">Select a color</option>
         </select>
+        <span class="text-danger" asp-validation-for="Color"></span>
     </div>
 
     <div class="form-check mb-4">
@@ -50,17 +54,26 @@
                 <label class="form-check-label" for="@(item.Value)Expire">@item.Key</label>
             </div>
         }
+        <span class="text-danger" asp-validation-for="Expire"></span>
     </div>
 
     <div class="form-floating mb-3">
         <textarea class="form-control" placeholder="Leave add a description" asp-for="Description" style="height: 100px"></textarea>
         <label asp-for="Description">Description</label>
+        <span class="text-danger" asp-validation-for="Description"></span>
     </div>
 
     <div class="mb-3">
         <label asp-for="PublishDate" class="form-label">Publish Date: </label>
         <input class="form-control" asp-for="PublishDate">
+        <span class="text-danger" asp-validation-for="PublishDate"></span>
     </div>
 
     <button class="btn btn-primary" type="submit">Update Product</button>
 </form>
+
+
+@section Scripts {
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}
