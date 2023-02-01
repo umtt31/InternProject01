@@ -1,4 +1,5 @@
 ﻿using AspNetCoreMvc004.Models;
+using AspNetCoreMvc004.PartialViews;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -8,13 +9,26 @@ namespace AspNetCoreMvc004.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        private readonly AppDbContext _context;
+
+        public HomeController(ILogger<HomeController> logger, AppDbContext context)
         {
             _logger = logger;
+            _context = context;
         }
 
         public IActionResult Index()
         {
+            var products = _context.Products.OrderByDescending(x => x.Id).Select(x => new ProductPartialViewModel()
+                                                                                        {
+                                                                                            Id = x.Id,
+                                                                                            Name = x.Name,
+                                                                                            Price = x.Price,
+                                                                                            Stock = x.Stock,
+                                                                                        }).ToList();
+
+            ViewBag.productsListPartialViewModel = new ProductListPartialViewModel() { Products = products };
+
             return View();
         }
 

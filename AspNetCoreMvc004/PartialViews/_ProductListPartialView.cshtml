@@ -1,0 +1,28 @@
+﻿@using AspNetCoreMvc004.PartialViews;
+
+@model ProductListPartialViewModel
+
+<table class="table table-success table-striped">
+
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Stock</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model.Products)
+        {
+            <tr>
+                <th>@item.Id</th>
+                <th>@item.Name</th>
+                <th>@item.Price</th>
+                <th>@item.Stock</th>
+            </tr>        
+        }
+    </tbody>
+
+</table>

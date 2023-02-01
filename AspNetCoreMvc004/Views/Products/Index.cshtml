@@ -16,15 +16,17 @@
 <a asp-controller="products" asp-action="Add">Add a Product</a>
 <table class="table">
     <thead>
-        <th>Id</th>
-        <th>Name</th>
-        <th>Price</th>
-        <th>Stock</th>
-        <th>Color</th>
-        <th>IsPublish</th>
-        <th>Expire Time</th>
-        <th>Description</th>
-        <th>Operations</th>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Stock</th>
+            <th>Color</th>
+            <th>IsPublish</th>
+            <th>Expire Time</th>
+            <th>Description</th>
+            <th>Operations</th>
+        </tr>
     </thead>
     <tbody>
         @foreach (var p in Model)
