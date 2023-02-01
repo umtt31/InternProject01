@@ -6,7 +6,8 @@ namespace AspNetCoreMvc004.ViewModels
     {
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "This space can not be empty!")] 
+        [Required(ErrorMessage = "This space can not be empty!")]
+        [StringLength(50, ErrorMessageResourceName = "Name attribute can not be greater than 50 chars")]
         public string? Name { get; set; }
 
         [Required(ErrorMessage = "This space can not be empty!")]
@@ -26,6 +27,7 @@ namespace AspNetCoreMvc004.ViewModels
         public int? Expire { get; set; }
 
         [Required(ErrorMessage = "This space can not be empty!")]
+        [StringLength(300, MinimumLength = 50, ErrorMessage = "Desription must be between 50 and 300 chars")]
         public string? Description { get; set; }
 
         [Required(ErrorMessage = "This space can not be empty!")]
