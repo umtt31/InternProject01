@@ -19,7 +19,7 @@ namespace AspNetCoreMvc004.Controllers
 
         public IActionResult Index()
         {
-            var products = _context.Products.OrderByDescending(x => x.Id).Select(x => new ProductPartialViewModel()
+            var products = _context.Products.Select(x => new ProductPartialViewModel()
                                                                                         {
                                                                                             Id = x.Id,
                                                                                             Name = x.Name,
