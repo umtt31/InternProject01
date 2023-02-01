@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace AspNetCoreMvc004.ViewModels
 {
@@ -7,7 +8,8 @@ namespace AspNetCoreMvc004.ViewModels
         public int Id { get; set; }
 
         [Required(ErrorMessage = "This space can not be empty!")]
-        [StringLength(50, ErrorMessageResourceName = "Name attribute can not be greater than 50 chars")]
+        [StringLength(50, ErrorMessage = "Name attribute can not be greater than 50 chars")]
+        [Remote(action: "HasProductName", controller: "Products")]
         public string? Name { get; set; }
 
         [Required(ErrorMessage = "This space can not be empty!")]

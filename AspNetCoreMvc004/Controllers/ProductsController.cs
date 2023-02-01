@@ -139,7 +139,21 @@ namespace AspNetCoreMvc004.Controllers
             return RedirectToAction("Index");
         }
 
+        [AcceptVerbs("GET", "POST")]
+        public IActionResult HasProductName(string Name)
+        {
+            var anyProduct = _context.Products.Any(x => x.Name.ToLower() == Name.ToLower());
 
+
+            if (anyProduct)
+            {
+                return Json("There is a product with same name");
+            }
+            else
+            {
+                return Json(true);
+            }
+        }
 
 
     }
