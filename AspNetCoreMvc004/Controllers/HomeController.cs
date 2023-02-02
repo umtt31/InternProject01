@@ -70,5 +70,16 @@ namespace AspNetCoreMvc004.Controllers
                 throw;
             }
         }
+
+        [HttpPost]
+        public IActionResult DeleteComment(int id)
+        {
+            var delete = _context.Visitors.Find(id);
+            _context.Visitors.Remove(delete);
+            _context.SaveChanges();
+
+
+            return RedirectToAction("Visitor");
+        }
     }
 }

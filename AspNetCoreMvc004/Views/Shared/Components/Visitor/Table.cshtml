@@ -8,6 +8,9 @@
                 <h5 class="card-title">@item.Name</h5>
                 <h6 class="card-subtitle mb-6 text-muted">@item.CreatedDate</h6>
                 <p class="card-text">@item.Comment</p>
+                <form asp-action="DeleteComment" asp-route-id="@item.Id" method="POST">
+                    <button type="submit">delete</button>
+                </form>
             </div>
         </div>
     }
