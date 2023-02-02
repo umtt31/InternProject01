@@ -1,1 +1,13 @@
-﻿
+﻿@model VisitorViewModel
+
+<form asp-controller="Home" asp-action="SaveVisitorComment" method="POST">
+    <div class="mb-3">
+        <label asp-for="Name" class="form-label">Name</label>
+        <input class="form-control" asp-for="Name">
+    </div>
+    <div class="mb-3">
+        <label asp-for="Comment" class="form-label">Comment</label>
+        <textarea class="form-control" placeholder="Leave add a comment" asp-for="Comment" style="height: 100px"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
