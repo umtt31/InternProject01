@@ -53,6 +53,7 @@ namespace AspNetCoreMvc004.Controllers
             try
             {
                 var visitor = _mapper.Map<Visitor>(visitorViewModel);
+                visitor.CreatedDate = DateTime.Now;
 
                 _context.Visitors.Add(visitor);
                 _context.SaveChanges();
