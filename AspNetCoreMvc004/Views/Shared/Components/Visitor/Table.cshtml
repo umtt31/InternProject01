@@ -1,0 +1,14 @@
+﻿@model List<VisitorViewModel>
+
+<div>
+    @foreach (var item in Model)
+    {
+        <div class="card" style="width: 28rem; margin: 5px auto">
+                <div class="card-body">
+                <h5 class="card-title">@item.Name</h5>
+                <h6 class="card-subtitle mb-6 text-muted">@item.CreatedDate</h6>
+                <p class="card-text">@item.Comment</p>
+            </div>
+        </div>
+    }
+</div>
