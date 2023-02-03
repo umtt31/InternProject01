@@ -7,6 +7,8 @@ using System.Diagnostics;
 
 namespace AspNetCoreMvc004.Controllers
 {
+
+    [Route("[controller]/[action]")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -22,6 +24,9 @@ namespace AspNetCoreMvc004.Controllers
             _mapper = mapper;
         }
 
+        [Route("/")]
+        [Route("/Home")]
+        [Route("/Home/Index")]
         public IActionResult Index()
         {
             var products = _context.Products.Select(x => new ProductPartialViewModel() {Id = x.Id, Name = x.Name, Price = x.Price, Stock = x.Stock,}).ToList();

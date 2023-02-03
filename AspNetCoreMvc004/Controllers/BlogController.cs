@@ -2,9 +2,10 @@
 
 namespace AspNetCoreMvc004.Controllers
 {
+    [Route("[controller]/[action]")]
     public class BlogController : Controller
     {
-        [Route("[controller]/[action]/{name}/{id}")]
+        [HttpGet("{name}/{id}")]
         public IActionResult Article(string name, int id)
         {
             // var routers = Request.RouteValues["article"];   
