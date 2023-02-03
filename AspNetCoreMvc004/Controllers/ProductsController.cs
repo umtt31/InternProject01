@@ -40,6 +40,7 @@ namespace AspNetCoreMvc004.Controllers
             return View(_mapper.Map<List<ProductViewModel>>(products));
         }
 
+        [Route("[controller]/[action]/{page}/{pageSize}")]
         public IActionResult Pages(int page, int pageSize)
         {
             ViewBag.page = page;
@@ -50,13 +51,15 @@ namespace AspNetCoreMvc004.Controllers
             return View(_mapper.Map<List<ProductViewModel>>(products));
         }
 
-        public IActionResult GetById(int id)
+        [Route("[controller]/[action]/{productid}", Name = "GetById")]
+        public IActionResult GetById(int productid)
         {
-            var product = _context.Products.Find(id);
+            var product = _context.Products.Find(productid);
 
             return View(_mapper.Map<ProductViewModel>(product));
         }
 
+        [Route("[controller]/[action]/{id}", Name = "Remove")]
         public IActionResult Remove(int id)
         {
             var product = _context.Products.Find(id); // Primary Key'e gore arama yapiyor
@@ -87,7 +90,8 @@ namespace AspNetCoreMvc004.Controllers
         }
 
 
-        [HttpPost] public IActionResult Add(ProductViewModel newProduct)
+        [HttpPost] 
+        public IActionResult Add(ProductViewModel newProduct)
         {
             /*
             var name = HttpContext.Request.Form["Name"].ToString();
@@ -124,6 +128,7 @@ namespace AspNetCoreMvc004.Controllers
             
         }
 
+        [Route("[controller]/[action]/{id}", Name = "Update")]
         public IActionResult Update(int id)
         {
             var product = _context.Products.Find(id);
@@ -145,7 +150,8 @@ namespace AspNetCoreMvc004.Controllers
             return View(_mapper.Map<ProductViewModel>(product));
         }
 
-        [HttpPost] public IActionResult Update(ProductViewModel updatedProduct, int productId)
+        [HttpPost] 
+        public IActionResult Update(ProductViewModel updatedProduct, int productId)
         {
             updatedProduct.Id = productId;
 

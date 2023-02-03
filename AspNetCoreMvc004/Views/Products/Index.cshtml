@@ -42,11 +42,11 @@
                 <td>@(p.Description.Length > 20 ? @p.Description.Substring(0, 10) : p.Description)</td>
                 <td>
                     <p>
-                        <a asp-controller="products" asp-action="Remove" asp-route-id="@p.Id">Delete</a>
+                        <a asp-route="Remove" asp-route-id="@p.Id">Delete</a>
                         |
-                        <a asp-controller="products" asp-action="Update" asp-route-id="@p.Id">Update</a>
+                        <a asp-route="Update" asp-route-id="@p.Id">Update</a>
                         |
-                        <a asp-controller="products" asp-action="GetById" asp-route-id="@p.Id">Details</a>
+                        <a asp-route="GetById" asp-route-productid="@p.Id">Details</a>
                     </p>
                 </td>
             </tr>
