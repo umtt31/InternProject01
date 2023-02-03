@@ -14,7 +14,7 @@ namespace AspNetCoreMvc004.ViewModels
 
         [Required(ErrorMessage = "This space can not be empty!")]
         [Range(200000, 20000000, ErrorMessage = "Price can not be smaller than 200.000 and can not be greater then 20.000.000")]
-        [RegularExpression(@"^[0 - 9] + (\.[0 - 9]{1, 2})", ErrorMessage = "Price must have maximum 2 digit as decimal")]
+        // [RegularExpression(@"^[0 - 9] + (\.[0 - 9]{1, 2})", ErrorMessage = "Price must have maximum 2 digit as decimal")]
         public decimal? Price { get; set; }
 
         [Required(ErrorMessage = "This space can not be empty!")]

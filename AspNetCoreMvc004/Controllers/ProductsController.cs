@@ -40,6 +40,16 @@ namespace AspNetCoreMvc004.Controllers
             return View(_mapper.Map<List<ProductViewModel>>(products));
         }
 
+        public IActionResult Pages(int page, int pageSize)
+        {
+            ViewBag.page = page;
+            ViewBag.pageSize = pageSize;
+
+            var products = _context.Products.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+
+            return View(_mapper.Map<List<ProductViewModel>>(products));
+        }
+
         public IActionResult GetById(int id)
         {
             var product = _context.Products.Find(id);
