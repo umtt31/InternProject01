@@ -1,0 +1,25 @@
+﻿@{
+    ViewData["Title"] = "GetbyId";
+}
+
+@model ProductViewModel
+
+<a class="btn btn-primary mb-2" asp-controller="Product" asp-action="Index">Go Back to Produts</a>
+
+<div class="card">
+    <div class="card-header">
+        Product: @Model.Name
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">Price: @Model.Price</h5>
+        <p class="card-text">Id: @Model.Id</p>
+        <p class="card-text">Stock: @Model.Stock</p>
+        <p class="card-text">Color: @Model.Color</p>
+        <p class="card-text">Is Pusblish: @(Model.IsPublish? "YES" : "NO")</p>
+        <p class="card-text">Expire: Model.Expire</p>
+        <p class="card-text">Publish Date: @Model.PublishDate</p>
+        <a href="#" class="btn btn-primary">Buy</a>
+    </div>
+</div>
+
+s
