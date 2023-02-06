@@ -1,4 +1,5 @@
-﻿using AspNetCoreMvc004.Models;
+﻿using AspNetCoreMvc004.Filters;
+using AspNetCoreMvc004.Models;
 using AspNetCoreMvc004.PartialViews;
 using AspNetCoreMvc004.ViewModels;
 using AutoMapper;
@@ -7,7 +8,7 @@ using System.Diagnostics;
 
 namespace AspNetCoreMvc004.Controllers
 {
-
+    [LogFilter]
     [Route("[controller]/[action]")]
     public class HomeController : Controller
     {
