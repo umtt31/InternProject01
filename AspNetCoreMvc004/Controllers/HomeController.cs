@@ -3,6 +3,7 @@ using AspNetCoreMvc004.Models;
 using AspNetCoreMvc004.PartialViews;
 using AspNetCoreMvc004.ViewModels;
 using AutoMapper;
+using Azure.Core;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -43,9 +44,10 @@ namespace AspNetCoreMvc004.Controllers
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        public IActionResult Error(ErrorViewModel errorViewModel)
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            errorViewModel.RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier;
+            return View();
         }
 
         public IActionResult Visitor()

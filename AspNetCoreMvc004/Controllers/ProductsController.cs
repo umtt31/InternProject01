@@ -1,4 +1,5 @@
-﻿using AspNetCoreMvc004.Helpers;
+﻿using AspNetCoreMvc004.Filters;
+using AspNetCoreMvc004.Helpers;
 using AspNetCoreMvc004.Models;
 using AspNetCoreMvc004.ViewModels;
 using AutoMapper;
@@ -53,6 +54,7 @@ namespace AspNetCoreMvc004.Controllers
             return View(_mapper.Map<List<ProductViewModel>>(products));
         }
 
+        [ServiceFilter(typeof(NotFoundFilter))]
         [Route("{productid}", Name = "GetById")]
         public IActionResult GetById(int productid)
         {
@@ -61,6 +63,7 @@ namespace AspNetCoreMvc004.Controllers
             return View(_mapper.Map<ProductViewModel>(product));
         }
 
+        [ServiceFilter(typeof(NotFoundFilter))]
         [Route("{id}", Name = "Remove")]
         public IActionResult Remove(int id)
         {
@@ -130,6 +133,7 @@ namespace AspNetCoreMvc004.Controllers
             
         }
 
+        [ServiceFilter(typeof(NotFoundFilter))]
         [Route("{id}", Name = "Update")]
         public IActionResult Update(int id)
         {

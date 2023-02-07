@@ -1,3 +1,4 @@
+using AspNetCoreMvc004.Filters;
 using AspNetCoreMvc004.Helpers;
 using AspNetCoreMvc004.Models;
 using Microsoft.EntityFrameworkCore;
@@ -19,6 +20,8 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddTransient<IHelper, Helper>();
 
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
+
+builder.Services.AddScoped<NotFoundFilter>();
 
 var app = builder.Build();
 
