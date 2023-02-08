@@ -36,6 +36,15 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
+app.Map("/products", app =>
+{
+    app.Use(async (context, next) =>
+    {
+
+        await next();
+    });
+});
+
 app.UseRouting();
 
 app.UseAuthorization();
