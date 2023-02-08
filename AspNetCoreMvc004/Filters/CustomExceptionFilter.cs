@@ -13,7 +13,7 @@ namespace AspNetCoreMvc004.Filters
 
             var error = context.Exception.Message;
 
-            context.Result = new RedirectToActionResult("error", "home", new ErrorViewModel() { Errors = new List<string> { "Unknown Error" });
+            context.Result = new RedirectToActionResult("error", "home", new ErrorViewModel() { Errors = new List<string> { "Unknown Error" } });
         }
     }
 }

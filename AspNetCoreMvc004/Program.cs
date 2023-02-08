@@ -1,5 +1,6 @@
 using AspNetCoreMvc004.Filters;
 using AspNetCoreMvc004.Helpers;
+using AspNetCoreMvc004.Middlewares;
 using AspNetCoreMvc004.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
@@ -36,14 +37,7 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
-app.Map("/products", app =>
-{
-    app.Use(async (context, next) =>
-    {
-
-        await next();
-    });
-});
+app.UseMiddleware<WhiteIpAddressControlMiddleware>();
 
 app.UseRouting();
 
