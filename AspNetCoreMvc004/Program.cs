@@ -3,6 +3,7 @@ using AspNetCoreMvc004.Helpers;
 using AspNetCoreMvc004.Middlewares;
 using AspNetCoreMvc004.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,6 +24,8 @@ builder.Services.AddTransient<IHelper, Helper>();
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
 builder.Services.AddScoped<NotFoundFilter>();
+
+builder.Services.AddSingleton<IFileProvider>( new PhysicalFileProvider(Directory.GetCurrentDirectory()) );
 
 var app = builder.Build();
 

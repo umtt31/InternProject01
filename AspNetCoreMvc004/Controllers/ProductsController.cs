@@ -5,6 +5,7 @@ using AspNetCoreMvc004.ViewModels;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.FileProviders;
 
 namespace AspNetCoreMvc004.Controllers
 {
@@ -18,11 +19,14 @@ namespace AspNetCoreMvc004.Controllers
 
         private readonly IMapper _mapper;
 
-        public ProductsController(AppDbContext context, IMapper mapper)
+        private readonly IFileProvider _fileProvider;
+
+        public ProductsController(AppDbContext context, IMapper mapper, IFileProvider fileProvider)
         {
             _productRepository = new ProductRepository();
             _context = context;
             _mapper = mapper;
+            _fileProvider = fileProvider;
 
             /* 
             if (!_context.Products.Any())
@@ -107,30 +111,56 @@ namespace AspNetCoreMvc004.Controllers
 
             // Product newProduct = new() { Name = Name, Price = Price, Stock = Stock, Color = Color};
 
+            IActionResult result = null;
+
             if (ModelState.IsValid)
             {
-                _context.Products.Add(_mapper.Map<Product>(newProduct));
-                _context.SaveChanges();
+                try
+                {
+                    var root = _fileProvider.GetDirectoryContents("wwwroot");
+                    var images = root.First(x => x.Name == "images");
 
-                TempData["status"] = "Product added successfully...";
+                    var RandomImageName = Guid.NewGuid() + Path.GetExtension(newProduct.Image.FileName);
 
-                return RedirectToAction("Index");
+                    var path = Path.Combine(images.PhysicalPath, RandomImageName);
+
+
+                    using var stream = new FileStream(path, FileMode.Create);
+                    newProduct.Image.CopyTo(stream);
+
+                    var product = _mapper.Map<Product>(newProduct);
+                    product.ImagePath = RandomImageName;
+
+                    _context.Products.Add(product);
+                    _context.SaveChanges();
+
+                    TempData["status"] = "Product added successfully...";
+
+                    return RedirectToAction("Index");
+                } 
+                catch(Exception ex)
+                {
+                    ModelState.AddModelError(string.Empty, "unknown error while saving");
+                    result = View();
+                }
             }
             else
             {
-                ViewBag.Expire = new Dictionary<string, int>() { { "1 Month", 1 },
+                result = View();
+            }
+
+            ViewBag.Expire = new Dictionary<string, int>() { { "1 Month", 1 },
                                                              { "3 Month" , 3},
                                                              { "6 Month", 6 },
                                                              { "12 Month", 12 } };
 
-                ViewBag.colorSelect = new SelectList(new List<ColorSelectList> { new() { Data = "Blue", Value = "Blue" },
+            ViewBag.colorSelect = new SelectList(new List<ColorSelectList> { new() { Data = "Blue", Value = "Blue" },
                                                                                  new() { Data = "Red", Value = "Red" },
                                                                                  new() { Data = "Green", Value = "Green" },
                                                                                 }, "Value", "Data");
 
-                return View();
-            }
-            
+            return result;
+
         }
 
         [ServiceFilter(typeof(NotFoundFilter))]

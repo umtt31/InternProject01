@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System.ComponentModel.DataAnnotations;
 
 namespace AspNetCoreMvc004.ViewModels
@@ -35,5 +36,10 @@ namespace AspNetCoreMvc004.ViewModels
 
         [Required(ErrorMessage = "This space can not be empty!")]
         public DateTime? PublishDate { get; set; }
+
+        public IFormFile Image { get; set; }
+
+        [ValidateNever]
+        public string ImagePath { get; set; }
     }
 }
