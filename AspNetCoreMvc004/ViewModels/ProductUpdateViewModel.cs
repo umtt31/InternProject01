@@ -4,11 +4,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AspNetCoreMvc004.ViewModels
 {
-    public class ProductViewModel
+    public class ProductUpdateViewModel
     {
         public int Id { get; set; }
 
-        [Remote(action: "HasProductName", controller: "Products")]
         [Required(ErrorMessage = "This space can not be empty!")]
         [StringLength(50, ErrorMessage = "Name attribute can not be greater than 50 chars")]
         // [Remote(action: "HasProductName", controller: "Products")]

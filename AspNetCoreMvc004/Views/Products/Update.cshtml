@@ -7,7 +7,20 @@
 <h1>Update a Product</h1>
 <hr />
 
-<form asp-action="Update" asp-route-productId="@Model.Id" method="POST">
+<form asp-action="Update" asp-route-productId="@Model.Id" method="POST" enctype="multipart/form-data" >
+    <div>
+        @if (!String.IsNullOrEmpty(Model.ImagePath))
+        {
+            <img style="width: 300px; height: 300px" src="/images/@(Model.ImagePath)"/>
+        }
+        else
+        {
+            <img style="width: 300px; height: 300px" src="/images/no-image.png" />
+        }
+    </div>
+
+    <input type="hidden" asp-for="ImagePath" />
+    
     <div class="mb-3">
         <label asp-for="Name" class="form-label">Name: </label>
         <input type="text" class="form-control" asp-for="Name">
@@ -67,6 +80,11 @@
         <label asp-for="PublishDate" class="form-label">Publish Date: </label>
         <input class="form-control" asp-for="PublishDate">
         <span class="text-danger" asp-validation-for="PublishDate"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Image" class="form-label">Image of Product</label>
+        <input class="form-control form-control-lg" asp-for="Image" type="file">
     </div>
 
     <button class="btn btn-primary" type="submit">Update Product</button>

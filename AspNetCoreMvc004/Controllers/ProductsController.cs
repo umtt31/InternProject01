@@ -117,19 +117,23 @@ namespace AspNetCoreMvc004.Controllers
             {
                 try
                 {
-                    var root = _fileProvider.GetDirectoryContents("wwwroot");
-                    var images = root.First(x => x.Name == "images");
-
-                    var RandomImageName = Guid.NewGuid() + Path.GetExtension(newProduct.Image.FileName);
-
-                    var path = Path.Combine(images.PhysicalPath, RandomImageName);
-
-
-                    using var stream = new FileStream(path, FileMode.Create);
-                    newProduct.Image.CopyTo(stream);
-
                     var product = _mapper.Map<Product>(newProduct);
-                    product.ImagePath = RandomImageName;
+
+                    if (newProduct.Image != null && newProduct.Image.Length > 0)
+                    {
+                        var root = _fileProvider.GetDirectoryContents("wwwroot");
+                        var images = root.First(x => x.Name == "images");
+
+                        var RandomImageName = Guid.NewGuid() + Path.GetExtension(newProduct.Image.FileName);
+
+                        var path = Path.Combine(images.PhysicalPath, RandomImageName);
+
+
+                        using var stream = new FileStream(path, FileMode.Create);
+                        newProduct.Image.CopyTo(stream);
+
+                        product.ImagePath = RandomImageName;
+                    }
 
                     _context.Products.Add(product);
                     _context.SaveChanges();
@@ -183,11 +187,11 @@ namespace AspNetCoreMvc004.Controllers
                 new() { Data = "Green", Value = "Green" },
             }, "Value", "Data", product.Color);
 
-            return View(_mapper.Map<ProductViewModel>(product));
+            return View(_mapper.Map<ProductUpdateViewModel>(product));
         }
 
         [HttpPost] 
-        public IActionResult Update(ProductViewModel updatedProduct, int productId)
+        public IActionResult Update(ProductUpdateViewModel updatedProduct, int productId)
         {
             updatedProduct.Id = productId;
 
@@ -204,11 +208,25 @@ namespace AspNetCoreMvc004.Controllers
                                                      new() { Data = "Blue", Value = "Blue" },
                                                      new() { Data = "Red", Value = "Red" },
                                                      new() { Data = "Green", Value = "Green" }, }, "Value", "Data", product.Color);
+                return View();
             }
-            else
-            {
 
+            if (updatedProduct.Image != null && updatedProduct.Image.Length > 0)
+            {
+                var root = _fileProvider.GetDirectoryContents("wwwroot");
+                var images = root.First(x => x.Name == "images");
+
+                var RandomImageName = Guid.NewGuid() + Path.GetExtension(updatedProduct.Image.FileName);
+
+                var path = Path.Combine(images.PhysicalPath, RandomImageName);
+
+
+                using var stream = new FileStream(path, FileMode.Create);
+                updatedProduct.Image.CopyTo(stream);
+
+                updatedProduct.ImagePath = RandomImageName;
             }
+
             _context.Products.Update(_mapper.Map<Product>(updatedProduct));
             _context.SaveChanges();
 
@@ -217,7 +235,6 @@ namespace AspNetCoreMvc004.Controllers
             return RedirectToAction("Index");
         }
 
-        /*
         [AcceptVerbs("GET", "POST")] public IActionResult HasProductName(string Name)
         {
             var anyProduct = _context.Products.Any(x => x.Name.ToLower() == Name.ToLower());
@@ -232,8 +249,5 @@ namespace AspNetCoreMvc004.Controllers
                 return Json(true);
             }
         }
-        */
-
-
     }
 }
