@@ -21,5 +21,7 @@
         public DateTime? PublishDate { get; set; }
 
         public string? ImagePath { get; set; }
+
+        public Category Category { get; set; }
     }
 }

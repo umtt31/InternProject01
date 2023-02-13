@@ -42,6 +42,11 @@ namespace AspNetCoreMvc004.ViewModels
         public IFormFile? Image { get; set; }
 
         [ValidateNever]
-        public string ImagePath { get; set; }
+        public string? ImagePath { get; set; }
+
+        [Required(ErrorMessage = "This space can not be empty!")]
+        public int CategoryId { get; set; }
+
+        public string? CategoryName { get; set; }
     }
 }

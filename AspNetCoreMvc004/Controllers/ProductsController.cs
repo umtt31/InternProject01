@@ -5,6 +5,7 @@ using AspNetCoreMvc004.ViewModels;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 
 namespace AspNetCoreMvc004.Controllers
@@ -42,9 +43,23 @@ namespace AspNetCoreMvc004.Controllers
 
         public IActionResult Index(/* [FromServices]IHelper helper2, int id */)
         {
-            var products = _context.Products.ToList();
-            
-            return View(_mapper.Map<List<ProductViewModel>>(products));
+            List<ProductViewModel> products = _context.Products.Include(x => x.Category).Select(x => new ProductViewModel()
+            {
+                Id= x.Id,
+                Name = x.Name,
+                Price = x.Price,
+                Stock = x.Stock,
+                Description = x.Description,
+                PublishDate = x.PublishDate,
+                Color = x.Color,
+                Expire = x.Expire,
+                CategoryName = x.Category.Name,
+                ImagePath = x.ImagePath,
+                IsPublish = x.IsPublish,
+                
+            }).ToList();
+
+            return View(products);
         }
 
         [HttpGet("{page}/{pageSize}")]
@@ -94,6 +109,9 @@ namespace AspNetCoreMvc004.Controllers
                 new() { Data = "Red", Value = "Red" },
                 new() { Data = "Green", Value = "Green" },
             }, "Value", "Data");
+
+            var categories = _context.Category.ToList();
+            ViewBag.categorySelect = new SelectList(categories, "Id", "Name");
 
             return View();
         }
@@ -162,6 +180,8 @@ namespace AspNetCoreMvc004.Controllers
                                                                                  new() { Data = "Red", Value = "Red" },
                                                                                  new() { Data = "Green", Value = "Green" },
                                                                                 }, "Value", "Data");
+            var categories = _context.Category.ToList();
+            ViewBag.categorySelect = new SelectList(categories, "Id", "Name");
 
             return result;
 
@@ -186,6 +206,9 @@ namespace AspNetCoreMvc004.Controllers
                 new() { Data = "Red", Value = "Red" },
                 new() { Data = "Green", Value = "Green" },
             }, "Value", "Data", product.Color);
+
+            var categories = _context.Category.ToList();
+            ViewBag.categorySelect = new SelectList(categories, "Id", "Name", /* product.CaetegoryId !! bunu yamak icin prop ekliyoruz */product.Category.Id);
 
             return View(_mapper.Map<ProductUpdateViewModel>(product));
         }
