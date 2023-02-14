@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AspNetCoreMvc004.Controllers
 {
+    [Route("/[controller]/[action]")]
     public class VisitorAjaxController : Controller
     {
         private readonly IMapper _mapper;
@@ -32,12 +33,22 @@ namespace AspNetCoreMvc004.Controllers
             return Json(new { IsSuccess = "true" });
         }
 
+        [HttpGet]
         public IActionResult VisitorCommentList()
         {
             var visitors = _context.Visitors.ToList();
             var visitorViewModels = _mapper.Map<List<VisitorViewModel>>(visitors);
 
             return Json(visitorViewModels); 
+        }
+
+        public IActionResult Delete(int id)
+        {
+            var comment = _context.Visitors.Find(id);
+            _context.Visitors.Remove(comment);
+            _context.SaveChanges(true);
+
+            return Json(new { msg = "DELETED SUCCESSFULLY" });
         }
     }
 }

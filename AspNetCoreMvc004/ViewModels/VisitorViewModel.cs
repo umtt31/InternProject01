@@ -9,5 +9,7 @@
         public string? Comment { get; set; }
 
         public DateTime CreatedDate { get; set; }
+
+        public string Date { get => CreatedDate.ToShortDateString(); }
     }
 }

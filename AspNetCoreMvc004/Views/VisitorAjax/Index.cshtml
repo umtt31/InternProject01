@@ -1,35 +1,36 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Index";
 }
 
-@section Scripts 
-{ 
+@section Scripts
+    {
     <script type="text/javascript">
         $(document).ready(() => {
 
             let loadComment = () => {
+                $("#loading").show();
                 $.ajax({
                     type: "GET",
-                    url: "VisitorAjax/VisiterCommentList",
-                    data: JsonData,
+                    url: "VisitorCommentList",
                     success: data => {
                         console.log(data);
+                        $("#comments").empty();
                         $.each(data, (index, item) => {
-                            var item = `<div class="card">
-                                                        <div class="card-body">
-                                                            <div class="card-title">${item.name}</div>
-                                                            <div class="card-subtitle mb-3 text-muted">${item.created}</div>
-                                                            <p class="card-text">${item.comment}</p>
-                                                        </div>
-                                                      </div>`;
-
-                            $("#comments").append(item);
-                        })
+                            var comment = `<div class="card">
+                                                <div class="card-body">
+                                                    <div class="card-title">${item.name}</div>
+                                                    <div class="card-subtitle mb-3 text-muted">${item.date}</div>
+                                                    <p class="card-text">${item.comment}</p>
+                                                    <button class="btn btn-danger" data-itemid="${item.id}">Delete</button>
+                                                </div>
+                                            </div>`;
+                            $("#comments").prepend(comment);
+                        });    
+                        $("#loading").hide();
                     },
                     error: err => { console.log(err) },
                 })
-            }
+            };
 
             loadComment();
 
@@ -38,17 +39,30 @@
                 var name = $("#Name").val();
                 var comment = $("#Comment").val();
 
-                var JsonData = { "name": name, "comment" : comment }
+                var JsonData = { "name": name, "comment": comment }
 
                 $.ajax({
                     type: "POST",
-                    url: "VisitorAjax/SaveVisitorComment",
+                    url: "SaveVisitorComment",
                     data: JsonData,
-                    success: data => { console.log(data) },
-                    error: err => { console.log(err) },
+                    success: data => { console.log(data); loadComment(); $("#Name").val(""); $("#Comment").val(""); },
+                    error: err => { console.log(err.message) },
+                })
+            });
+
+            $(document.body).on('click', `[data-itemid]`, function () {
+                var itemId = $(this).data("itemid");
+                console.log(itemId)
+                $.ajax({
+                    type: "POST",
+                    url: "Delete",
+                    data: { id: itemId },
+                    success: data => { console.log(data); loadComment(); /* alert(data) */ },
+                    error: err => { console.log(err.message) },
                 })
             })
-        })
+        });
+
     </script>
 }
 
@@ -65,6 +79,11 @@
             <textarea class="form-control" placeholder="Leave add a comment" id="Comment" style="height: 100px"></textarea>
         </div>
         <button id="btnSave" type="button" class="btn btn-primary">Submit</button>
+    </div>
+    <div id="loading">
+        <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
     </div>
     <div class="col-7" id="comments">
         
